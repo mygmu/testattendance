@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exam Check-in</title>
+  <style>
+    :root {
+      --ink: #15233B;
+      --muted: #5B6676;
+      --bg: #182238;
+      --card: #FFFFFF;
+      --border: #CED4DE;
+      --green: #0F7A5A;
+      --green-soft: #E7F4EF;
+      --danger: #B23A32;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%
+    }
+
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-user-select: none;
+      user-select: none
+    }
+
+    .card {
+      background: var(--card);
+      width: 560px;
+      max-width: 100%;
+      border-radius: 16px;
+      padding: 34px 36px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .28)
+    }
+
+    .brand {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .4px;
+      margin-bottom: 4px
+    }
+
+    h1 {
+      color: var(--ink);
+      font-size: 24px;
+      margin: 0 0 4px
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 13.5px;
+      margin: 0 0 24px
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 12.5px;
+      margin: 0 0 7px
+    }
+
+    input[type=text] {
+      width: 100%;
+      font-size: 21px;
+      text-align: center;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px
+    }
+
+    input[type=text]:focus {
+      outline: none;
+      border-color: var(--ink)
+    }
+
+    select {
+      width: 100%;
+      font-size: 16px;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px;
+      background: #fff
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 18px
+    }
+
+    .btn.dark {
+      background: var(--ink);
+      color: #fff
+    }
+
+    .btn.green {
+      background: var(--green);
+      color: #fff
+    }
+
+    .btn.grey {
+      background: #EDEFF2;
+      color: var(--ink)
+    }
+
+    .btn[disabled] {
+      opacity: .55;
+      cursor: default
+    }
+
+    .btn.half {
+      width: 48%
+    }
+
+    .rowb {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 18px
+    }
+
+    .rowb .btn {
+      margin-top: 0
+    }
+
+    .who {
+      background: var(--green-soft);
+      border: 1px solid #BFE4D6;
+      border-radius: 12px;
+      padding: 16px 18px
+    }
+
+    .who .nm {
+      color: #0B5B43;
+      font-size: 20px;
+      font-weight: 700
+    }
+
+    .who .co {
+      color: #3C6B5B;
+      font-size: 13.5px;
+      margin-top: 3px
+    }
+
+    .ack {
+      display: flex;
+      align-items: flex-start;
+      margin-top: 20px;
+      color: var(--ink);
+      font-size: 13.5px;
+      cursor: pointer
+    }
+
+    .ack input {
+      margin: 2px 11px 0 0;
+      width: 19px;
+      height: 19px;
+      flex: 0 0 auto
+    }
+
+    .status {
+      min-height: 22px;
+      margin-top: 18px;
+      font-size: 13.5px;
+      text-align: center;
+      color: var(--muted)
+    }
+
+    .status.err {
+      color: var(--danger)
+    }
+
+    .status.ok {
+      color: var(--green)
+    }
+
+    .ws {
+      text-align: center;
+      color: #9AA3B2;
+      font-size: 11px;
+      margin-top: 20px
+    }
+
+    .hidden {
+      display: none
+    }
+
+    .done .big {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 40px;
+      line-height: 74px;
+      text-align: center;
+      margin: 4px auto 14px
+    }
+
+    .done {
+      text-align: center
+    }
+
+    .done h1 {
+      margin-bottom: 6px
+    }
+
+    .countdown {
+      color: var(--muted);
+      font-size: 12.5px;
+      margin-top: 16px
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card" id="card">
+    <div class="brand" id="brand">GULF MEDICAL UNIVERSITY</div>
+
+    <!-- step 1 -->
+    <div id="step1">
+      <h1>Exam Check-in</h1>
+      <p class="sub">Enter your registration number to begin.</p>
+      <label for="reg">Registration number</label>
+      <input type="text" id="reg" maxlength="30" autocomplete="off" autocapitalize="characters">
+      <button class="btn dark" id="btnFind">Continue</button>
+    </div>
+
+    <!-- step 2 -->
+    <div id="step2" class="hidden">
+      <h1>Is this you?</h1>
+      <p class="sub">Confirm your details, then choose your exam.</p>
+      <div class="who">
+        <div class="nm" id="nm"></div>
+        <div class="co" id="co"></div>
+      </div>
+      <div class="rowb">
+        <button class="btn grey half" id="btnNotMe">Not me</button>
+        <button class="btn dark half" id="btnYes">Yes, continue</button>
+      </div>
+    </div>
+
+    <!-- step 3 -->
+    <div id="step3" class="hidden">
+      <h1>Your exam</h1>
+      <p class="sub" id="forWhom"></p>
+      <label for="exam">Scheduled exam</label>
+      <select id="exam"></select>
+      <label class="ack" id="ackWrap">
+        <input type="checkbox" id="ack">
+        <span>I confirm I am the above student, I am sitting this exam in person at this testing centre, and the
+          information I have provided is correct.</span>
+      </label>
+      <button class="btn green" id="btnSubmit">Submit &amp; start exam</button>
+      <button class="btn grey" id="btnCancel">Cancel</button>
+    </div>
+
+    <!-- done -->
+    <div id="done" class="done hidden">
+      <div class="big">&#10003;</div>
+      <h1 id="doneName">Checked in</h1>
+      <p class="sub" id="doneMsg">Your exam is starting.</p>
+      <button class="btn green" id="btnLaunch">Open my exam</button>
+      <div class="countdown" id="countdown"></div>
+    </div>
+
+    <div class="status" id="status"></div>
+    <div class="ws" id="wsLine"></div>
+  </div>
+
+  <script>
+    /* =====================================================================
+       GMU Testing Centre — student check-in page (host on GitHub Pages)
+       - The workstation name arrives in the page URL (#ws=PCNAME), injected
+         by the desktop shortcut. It is sent with every request; the backend's
+         workstation allowlist is the authentication, so no secret is stored here.
+       - On success the page opens the exam through a registered link
+         (examstart://) that the installer points straight at Examplify.
+       ===================================================================== */
+    (function () {
+      'use strict';
+
+      /* ------- CONFIG: set these two, then host this file on GitHub Pages ------- */
+      var API_URL = 'https://script.google.com/macros/s/AKfycbylMr8pF3cHt7MtLJTWpRbB0o8ylNPPurHPfXX9PL324QCBAi-oq_yxnzomiTMeh7jJ/exec';        // the Apps Script /exec link
+      var LAUNCH_URL = 'examstart://launch';               // registered on each PC -> Examplify (installer does this)
+      var INSTITUTION = 'Gulf Medical University';
+      var STATION_KEY = '';   // leave empty when the workstation lock is ON; only used if the lock is OFF
+      var RESET_SECONDS = 12;   // return to a blank form for the next student
+      /* ------------------------------------------------------------------------- */
+
+      var WS = readWorkstation();
+      var student = null, launchUrl = '', resetTimer = null;
+
+      function $(id) { return document.getElementById(id); }
+      function show(id) { $(id).classList.remove('hidden'); }
+      function hide(id) { $(id).classList.add('hidden'); }
+      function val(id) { return ($(id).value || '').trim(); }
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+      function status(msg, kind) { var s = $('status'); s.className = 'status' + (kind ? ' ' + kind : ''); s.textContent = msg || ''; }
+
+      function readWorkstation() {
+        var h = (location.hash || '').replace(/^#/, '') + '&' + (location.search || '').replace(/^\?/, '');
+        var m = /(?:^|&)ws=([^&]+)/i.exec(h);
+        return m ? decodeURIComponent(m[1]).trim() : '';
+      }
+
+      function api(action, extra) {
+        var body = { action: action, workstation: WS };
+        if (STATION_KEY) body.api_key = STATION_KEY;
+        for (var k in extra) if (extra.hasOwnProperty(k)) body[k] = extra[k];
+        var ctrl = window.AbortController ? new AbortController() : null;
+        var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 30000);
+        var opts = { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) };
+        if (ctrl) opts.signal = ctrl.signal;
+        return fetch(API_URL, opts).then(function (r) { clearTimeout(timer); return r.json(); })
+          .catch(function () { clearTimeout(timer); throw new Error('Cannot reach the server. Please call the proctor.'); });
+      }
+
+      function goStep(id) { hide('step1'); hide('step2'); hide('step3'); hide('done'); show(id); status('', ''); }
+
+      function reset() {
+        if (resetTimer) { clearInterval(resetTimer); resetTimer = null; }
+        student = null; $('reg').value = ''; goStep('step1'); try { $('reg').focus(); } catch (e) { }
+      }
+
+      /* ---- step 1: look up the student ---- */
+      function doFind() {
+        var reg = val('reg');
+        if (!reg) { status('Please enter your registration number.', 'err'); return; }
+        $('btnFind').disabled = true; status('Looking up your details\u2026', '');
+        api('station.find', { reg_no: reg }).then(function (r) {
+          $('btnFind').disabled = false;
+          if (r.status === 'success') {
+            student = r;
+            $('nm').textContent = r.student_name;
+            $('co').textContent = r.cohort || r.program || '';
+            goStep('step2');
+          } else {
+            status(r.message || 'Not found.', 'err');
+            try { $('reg').select(); } catch (e) { }
+          }
+        }, function (e) { $('btnFind').disabled = false; status(e.message, 'err'); });
+      }
+
+      /* ---- step 2 -> 3: load this student's exams ---- */
+      function toStep3() {
+        if (!student) { reset(); return; }
+        $('forWhom').textContent = student.student_name + '  \u2014  ' + (student.cohort || '');
+        $('ack').checked = false;
+        var sel = $('exam'); sel.innerHTML = ''; sel.disabled = true; $('btnSubmit').disabled = true;
+        goStep('step3'); status('Loading your exams\u2026', '');
+        api('station.exams', { reg_no: student.reg_no }).then(function (r) {
+          status('', '');
+          sel.innerHTML = '';
+          if (r.status === 'success' && r.exams && r.exams.length) {
+            for (var i = 0; i < r.exams.length; i++) {
+              var e = r.exams[i], o = document.createElement('option');
+              o.value = e.code; o.textContent = e.name + (e.hall ? '  (' + e.hall + ')' : '');
+              sel.appendChild(o);
+            }
+            sel.disabled = false; $('btnSubmit').disabled = false;
+          } else {
+            var o2 = document.createElement('option'); o2.value = ''; o2.textContent = 'No exam scheduled for you right now';
+            sel.appendChild(o2);
+            status('No exam is open for you. Please see the proctor.', 'err');
+          }
+        }, function (e) { status(e.message, 'err'); });
+      }
+
+      /* ---- submit + launch ---- */
+      function doSubmit() {
+        if (!student) { reset(); return; }
+        var code = $('exam').value;
+        if (!code) { status('Please select your exam.', 'err'); return; }
+        if (!$('ack').checked) { status('Please tick the acknowledgement box.', 'err'); return; }
+        $('btnSubmit').disabled = true; $('exam').disabled = true; status('Recording your attendance\u2026', '');
+        api('station.checkin', { reg_no: student.reg_no, exam_code: code, acknowledged: true }).then(function (r) {
+          if (r.status === 'success') {
+            launchUrl = r.launch_url || LAUNCH_URL;
+            $('doneName').textContent = 'Thank you, ' + (r.student_name || '');
+            $('doneMsg').textContent = r.duplicate ? 'You are checked in. Your exam is opening.' : 'Attendance recorded. Your exam is opening.';
+            goStep('done');
+            launchExam();
+            startReset();
+          } else {
+            status(r.message || 'Could not record attendance.', 'err');
+            $('btnSubmit').disabled = false; $('exam').disabled = false;
+          }
+        }, function (e) { status(e.message, 'err'); $('btnSubmit').disabled = false; $('exam').disabled = false; });
+      }
+
+      function launchExam() {
+        if (!launchUrl) return;
+        try { window.location.href = launchUrl; } catch (e) { }   // registered link -> Examplify
+      }
+
+      function startReset() {
+        var left = RESET_SECONDS;
+        $('countdown').textContent = 'This screen resets in ' + left + 's for the next student.';
+        resetTimer = setInterval(function () {
+          left--;
+          if (left <= 0) { reset(); return; }
+          $('countdown').textContent = 'This screen resets in ' + left + 's for the next student.';
+        }, 1000);
+      }
+
+      /* ---- wiring ---- */
+      $('btnFind').onclick = doFind;
+      $('reg').onkeydown = function (e) { if ((e || window.event).keyCode === 13) doFind(); };
+      $('btnNotMe').onclick = reset;
+      $('btnYes').onclick = toStep3;
+      $('btnCancel').onclick = reset;
+      $('btnSubmit').onclick = doSubmit;
+      $('btnLaunch').onclick = launchExam;
+
+      /* ---- boot ---- */
+      $('brand').textContent = INSTITUTION;
+      $('wsLine').textContent = WS ? ('Workstation: ' + WS) : 'Workstation: not detected';
+      if (!API_URL || API_URL.indexOf('PASTE_') === 0) {
+        status('This page is not configured. Please inform IT (API link missing).', 'err');
+        $('btnFind').disabled = true;
+      }
+      try { $('reg').focus(); } catch (e) { }
+    })();
+  </script>
+</body>
+
+</html>
